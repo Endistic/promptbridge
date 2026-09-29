@@ -1,0 +1,49 @@
+locale: th
+name: Thai
+native_name: ภาษาไทย
+
+# Default phrasing for "missing" questions. The host model may rephrase to fit
+# the task, but should keep the meaning and ask in this language.
+questions:
+  goal: สรุปเป้าหมายเป็นประโยคเดียว — อยากให้ผลลัพธ์สุดท้ายเป็นอย่างไร?
+  constraints: มีส่วนไหนที่ห้ามแตะ หรือต้องคงไว้เหมือนเดิมไหม?
+  files: รู้ไหมว่าเกี่ยวกับไฟล์หรือโฟลเดอร์ไหน?
+  observed: ตอนนี้เกิดอะไรขึ้น (อาการที่ผิด)?
+  expected: ที่ถูกต้องควรเป็นอย่างไร?
+  location: เกิดที่ไหน — หน้าไหน, API ไหน, หรือคำสั่งไหน?
+  repro: ทำอย่างไรถึงจะเจอปัญหานี้ (ขั้นตอน)?
+  error_log: มีข้อความ error ไหม? (วางมาได้เลย)
+  acceptance: ถือว่าเสร็จเมื่อไหร่ — ตรวจอย่างไร?
+  behavior: ผู้ใช้หรือระบบที่เรียกใช้ต้องเห็น/ได้อะไรบ้าง?
+  edge_cases: ถ้าเกิดกรณีผิดปกติ (ข้อมูลว่าง, API ล้ม, เกินลิมิต) ให้ทำอะไร?
+  surface: อยู่ตรงไหน — หน้าจอไหน, endpoint ไหน, หรือ job ไหน?
+  out_of_scope: มีอะไรที่ไม่ต้องทำในรอบนี้ไหม?
+  target: จะปรับโค้ดส่วนไหน?
+  desired_structure: อยากให้หลังปรับแล้วโครงสร้างเป็นแบบไหน?
+  behavior_preserved: พฤติกรรมเดิมต้องเหมือนเดิม 100% ไหม?
+  tests: ต้องการ test แบบไหน?
+  code_under_test: จะเทสโค้ดส่วนไหน?
+  cases: ต้องครอบคลุมกรณีไหนบ้าง?
+  framework: ใช้ test framework อะไร?
+  mocking: อะไรต้อง mock อะไรต้องใช้ของจริง?
+  scope: อยากให้อธิบายส่วนไหน?
+  focus: อยากเข้าใจเรื่องไหนเป็นพิเศษ?
+  depth: อยากได้ละเอียดแค่ไหน?
+
+# Used when the host inferred a high-risk value and the server wants it confirmed.
+# {value} is the inferred value; the host should present it in this language.
+confirm: "ผมเข้าใจว่า: {value} — ถูกต้องไหม?"
+
+# Instructions to the host model (kept in English so every model follows them).
+summary_instruction: >-
+  Summarize the spec above for the user in Thai, in 2-3 short lines, so they can
+  confirm it matches their intent. Keep code identifiers, file paths and numbers
+  as-is. Then ask: approve, edit, or cancel.
+reflect_instruction: >-
+  When you report plans, questions, or results to the user, write the prose in
+  Thai. Keep code, file paths, identifiers, commands and error messages exactly
+  as they are. Be brief: what you will do / did, what changed, anything the
+  user must decide.
+communication_line: >-
+  Reply to the user in Thai for plans, questions and summaries. Keep code,
+  file paths, identifiers, commands and error messages in their original form.

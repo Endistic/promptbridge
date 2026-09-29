@@ -1,0 +1,42 @@
+task_type: feature
+title: Feature
+keywords:
+  th: [เพิ่ม, อยากให้, ทำให้, สร้าง, ฟีเจอร์, ใหม่, รองรับ]
+  en: [add, feature, implement, support, create, new]
+slots:
+  behavior:
+    description: Concrete behavior requirements, one per item (what the user or caller sees and gets).
+    kind: list
+    required: true
+    risk: high
+  acceptance:
+    description: Checkable criteria that prove the feature works.
+    kind: list
+    required: true
+    risk: medium
+  edge_cases:
+    description: Edge cases and failure handling (empty input, errors, limits).
+    kind: list
+    required: false
+    risk: medium
+  surface:
+    description: Where it appears — UI screen, API endpoint, CLI command, job.
+    kind: text
+    required: false
+    risk: medium
+  out_of_scope:
+    description: Things explicitly NOT part of this task.
+    kind: list
+    required: false
+    risk: low
+sections:
+  - {title: Goal, slots: [goal], style: paragraph}
+  - {title: Where, slots: [surface], style: paragraph}
+  - {title: Requirements, slots: [behavior], style: bullets}
+  - {title: Edge cases, slots: [edge_cases], style: bullets}
+  - {title: Constraints, slots: [constraints], style: bullets}
+  - {title: Out of scope, slots: [out_of_scope], style: bullets}
+  - {title: Acceptance criteria, slots: [acceptance], style: checklist}
+instructions:
+  - Propose a short plan (files to change, approach) before writing code.
+  - Add or update tests that cover the acceptance criteria.

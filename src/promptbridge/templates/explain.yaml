@@ -1,0 +1,31 @@
+task_type: explain
+title: Explain
+ask: false
+keywords:
+  th: [อธิบาย, ทำงานยังไง, ทำงานอย่างไร, คืออะไร, หมายความว่า, ทำไม, ไหลยังไง, flow]
+  en: [explain, how does, what is, why does, walk me through]
+slots:
+  scope:
+    description: What to explain — file, function, flow, or concept.
+    kind: text
+    required: true
+    risk: medium
+  focus:
+    description: What the user especially wants to understand.
+    kind: text
+    required: false
+    risk: low
+  depth:
+    description: Level of detail.
+    kind: text
+    required: false
+    risk: low
+    default: Start with a short overview, then key details. Offer to go deeper.
+sections:
+  - {title: Question, slots: [goal], style: paragraph}
+  - {title: Scope, slots: [scope], style: paragraph}
+  - {title: Focus, slots: [focus], style: paragraph}
+  - {title: Depth, slots: [depth], style: paragraph}
+instructions:
+  - Do not modify any files.
+  - Reference exact file paths and function names so the user can navigate.

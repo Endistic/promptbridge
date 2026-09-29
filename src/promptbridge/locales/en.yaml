@@ -1,0 +1,44 @@
+locale: en
+name: English
+native_name: English
+
+questions:
+  goal: In one sentence, what outcome do you want?
+  constraints: Is there anything that must not change?
+  files: Do you know which files or folders are involved?
+  observed: What happens now (the wrong behavior)?
+  expected: What should happen instead?
+  location: Where does it happen — which page, endpoint, or command?
+  repro: How can it be reproduced?
+  error_log: Is there an error message? Paste it as-is.
+  acceptance: How will we know it is done?
+  behavior: What should the user or caller see and get?
+  edge_cases: What should happen in unusual cases (empty input, API failure, limits)?
+  surface: Where does it live — which screen, endpoint, or job?
+  out_of_scope: Anything explicitly not part of this task?
+  target: Which code should be refactored?
+  desired_structure: What should the structure look like afterwards?
+  behavior_preserved: Must existing behavior stay exactly the same?
+  tests: What tests do you expect?
+  code_under_test: Which code should be tested?
+  cases: Which cases must be covered?
+  framework: Which test framework?
+  mocking: What should be mocked and what must be real?
+  scope: What should be explained?
+  focus: Anything you especially want to understand?
+  depth: How detailed?
+
+confirm: "I understood: {value} — is that right?"
+
+summary_instruction: >-
+  Summarize the spec above for the user in {language}, in 2-3 short lines, so
+  they can confirm it matches their intent. Keep code identifiers, file paths
+  and numbers as-is. Then ask: approve, edit, or cancel.
+reflect_instruction: >-
+  When you report plans, questions, or results to the user, write the prose in
+  {language}. Keep code, file paths, identifiers, commands and error messages
+  exactly as they are. Be brief.
+communication_line: >-
+  Reply to the user in {language} for plans, questions and summaries. Keep
+  code, file paths, identifiers, commands and error messages in their original
+  form.

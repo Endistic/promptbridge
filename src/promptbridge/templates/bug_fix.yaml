@@ -1,0 +1,52 @@
+task_type: bug_fix
+title: Bug fix
+keywords:
+  th: [บัค, บั๊ก, พัง, ไม่ทำงาน, ผิดพลาด, error, เออเร่อ, แครช, ค้าง, ไม่ขึ้น, หาย, แสดงผิด]
+  en: [bug, error, crash, broken, fails, exception, not working, wrong]
+slots:
+  observed:
+    description: What actually happens now (the wrong behavior).
+    kind: text
+    required: true
+    risk: high
+  expected:
+    description: What should happen instead.
+    kind: text
+    required: true
+    risk: high
+  location:
+    description: Where it happens — page, endpoint, command, or file.
+    kind: text
+    required: true
+    risk: medium
+  repro:
+    description: Steps to reproduce.
+    kind: list
+    required: false
+    risk: medium
+  error_log:
+    description: Error message or stack trace, verbatim.
+    kind: text
+    required: false
+    risk: low
+  acceptance:
+    description: How we know it is fixed.
+    kind: list
+    required: false
+    risk: medium
+    default:
+      - The observed behavior no longer occurs.
+      - A regression test reproduces the bug and now passes.
+      - Existing tests still pass.
+sections:
+  - {title: Goal, slots: [goal], style: paragraph}
+  - {title: Observed behavior, slots: [observed], style: paragraph}
+  - {title: Expected behavior, slots: [expected], style: paragraph}
+  - {title: Where, slots: [location], style: paragraph}
+  - {title: Steps to reproduce, slots: [repro], style: numbered}
+  - {title: Error output, slots: [error_log], style: code}
+  - {title: Constraints, slots: [constraints], style: bullets}
+  - {title: Acceptance criteria, slots: [acceptance], style: checklist}
+instructions:
+  - Find the root cause before changing code; explain it in one or two sentences.
+  - Make the smallest change that fixes the root cause.

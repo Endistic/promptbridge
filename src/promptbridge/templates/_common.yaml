@@ -1,0 +1,27 @@
+# Slots shared by every task type. A task template may override any of these.
+#
+# Slot fields
+#   description  what the host model should put here (English, for the model)
+#   kind         text | list
+#   required     must have a value before compile is "clean"
+#   risk         high | medium | low — how costly a wrong guess is
+#   default      used when missing; defaulted slots are never asked about
+#   fallback     rendered when missing, but the slot can still be asked about
+slots:
+  goal:
+    description: One sentence stating the outcome the user wants.
+    kind: text
+    required: true
+    risk: high
+  constraints:
+    description: Things the agent must NOT change or must respect (APIs, libraries, files, style).
+    kind: list
+    required: false
+    risk: high
+    fallback:
+      - Do not change public APIs, add dependencies, or edit unrelated files without asking first.
+  files:
+    description: Files or directories likely involved, if known.
+    kind: list
+    required: false
+    risk: low

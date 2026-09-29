@@ -1,0 +1,36 @@
+task_type: test
+title: Tests
+keywords:
+  th: [เทส, เขียนเทส, ทดสอบ, unit test, test case, coverage]
+  en: [test, tests, unit test, coverage, spec, e2e]
+slots:
+  code_under_test:
+    description: The code to test — file, function, endpoint, or component.
+    kind: text
+    required: true
+    risk: high
+  cases:
+    description: Cases to cover, one per item (happy path, edge cases, failures).
+    kind: list
+    required: true
+    risk: medium
+  framework:
+    description: Test framework and location convention (e.g. pytest in tests/).
+    kind: text
+    required: false
+    risk: low
+  mocking:
+    description: What to mock and what must be real (DB, network, time).
+    kind: text
+    required: false
+    risk: medium
+sections:
+  - {title: Goal, slots: [goal], style: paragraph}
+  - {title: Code under test, slots: [code_under_test], style: paragraph}
+  - {title: Cases to cover, slots: [cases], style: checklist}
+  - {title: Framework, slots: [framework], style: paragraph}
+  - {title: Mocking, slots: [mocking], style: paragraph}
+  - {title: Constraints, slots: [constraints], style: bullets}
+instructions:
+  - Follow the existing test style in the repo.
+  - Do not change production code unless a test reveals a real bug; report it first.

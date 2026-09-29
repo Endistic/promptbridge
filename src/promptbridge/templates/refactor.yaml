@@ -1,0 +1,38 @@
+task_type: refactor
+title: Refactor
+keywords:
+  th: [รีแฟคเตอร์, refactor, ปรับโครง, จัดโครงสร้าง, แยกไฟล์, แยกฟังก์ชัน, ทำให้อ่านง่าย, ลดโค้ดซ้ำ, ย้าย]
+  en: [refactor, restructure, clean up, extract, split, rename, simplify, deduplicate]
+slots:
+  target:
+    description: The code area to refactor — files, module, class, or function.
+    kind: text
+    required: true
+    risk: high
+  desired_structure:
+    description: What the code should look like afterwards (new modules, responsibilities, patterns).
+    kind: list
+    required: true
+    risk: high
+  behavior_preserved:
+    description: Behavior guarantee.
+    kind: text
+    required: true
+    risk: high
+    default: External behavior and public APIs must not change.
+  tests:
+    description: Test expectations.
+    kind: text
+    required: false
+    risk: medium
+    default: All existing tests must pass; add tests for touched code that has no coverage.
+sections:
+  - {title: Goal, slots: [goal], style: paragraph}
+  - {title: Target, slots: [target], style: paragraph}
+  - {title: Desired structure, slots: [desired_structure], style: bullets}
+  - {title: Behavior, slots: [behavior_preserved], style: paragraph}
+  - {title: Constraints, slots: [constraints], style: bullets}
+  - {title: Tests, slots: [tests], style: paragraph}
+instructions:
+  - Work in small steps that each keep the tests green.
+  - List any behavior change you could not avoid, and stop to ask before making it.

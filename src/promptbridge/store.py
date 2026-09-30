@@ -79,7 +79,7 @@ class Store:
     def get_session(self, sid: str) -> dict:
         row = self.db.execute("SELECT * FROM sessions WHERE id = ?", (sid,)).fetchone()
         if row is None:
-            raise ValueError(f"Unknown session_id {sid!r}. Call pb_capture first.")
+            raise ValueError(f"Unknown spec_id {sid!r}. Call pb_capture first.")
         d = dict(row)
         d["slots"] = json.loads(d["slots"])
         d["context"] = json.loads(d["context"])

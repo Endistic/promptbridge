@@ -44,7 +44,7 @@ repo (Glob/Grep for the obvious files), fill the `slot_schema`:
   one to `pb_clarify`.
 
 ### 3. Clarify (max 2 rounds)
-Call `pb_clarify(session_id, slots, task_type?, quick?)`.
+Call `pb_clarify(spec_id, slots, task_type?, quick?)`.
 
 If `ready` is false, ask the returned `questions` with **AskUserQuestion** in one call:
 - One question per item, in the user's language. Start from `prompt`, adapt it to this task.
@@ -60,7 +60,7 @@ call again with `quick: true`.
 If AskUserQuestion is not available, ask in plain text as a numbered list with the options.
 
 ### 4. Compile and confirm
-Call `pb_compile(session_id)`. Then show the user:
+Call `pb_compile(spec_id)`. Then show the user:
 
 1. A 2–3 line summary in their language, following `summary_instruction`.
 2. The assumptions, if any, as a short list in their language — these are the things they should check.
@@ -79,7 +79,7 @@ If `validation.warnings` mentions untranslated text, fix the slot and compile ag
 - **Cancel** → call `pb_save(outcome="rejected")` and stop.
 
 ### 6. Save and learn
-After the work (or after cancel), call `pb_save(session_id, outcome, final_spec?)`:
+After the work (or after cancel), call `pb_save(spec_id, outcome, final_spec?)`:
 - `accepted` if the spec was used as compiled, `edited` + `final_spec` if it changed, `rejected` if cancelled.
 - If it returns `glossary_candidates`, match each to the word the user used in `raw_text`, then ask once:
   "จำคำเหล่านี้ไว้ไหม? «ตะกร้า» = `CartStore`". On yes, call `pb_glossary(action="add", …)`.

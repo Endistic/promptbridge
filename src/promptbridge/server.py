@@ -100,7 +100,7 @@ def pb_capture(
 ) -> dict:
     """Start a session from the user's request, written in their own language.
 
-    Returns a session_id, a guessed task_type (override it if wrong), glossary terms found in the
+    Returns a spec_id, a guessed task_type (override it if wrong), glossary terms found in the
     text, a light scan of the repo at `cwd`, and the slot schema to fill.
 
     Next: read raw_text, fill every slot you can as ENGLISH text (value_en) with status
@@ -123,7 +123,7 @@ def pb_capture(
     sid = store().create_session(loc.locale, raw_text, str(root) if root else cwd, chosen, context)
 
     return {
-        "session_id": sid,
+        "spec_id": sid,
         "task_type": chosen,
         "task_type_guess": guessed,
         "task_type_scores": scores,
@@ -142,7 +142,7 @@ def pb_capture(
 
 @tool
 def pb_clarify(
-    session_id: str,
+    spec_id: str,
     slots: dict[str, SlotValue],
     task_type: Optional[str] = None,
     quick: bool = False,
@@ -157,10 +157,10 @@ def pb_clarify(
     adapted to this task, and offer 2-4 concrete options plus a free-text choice. For kind="confirm",
     show your inferred value and ask the user to confirm or correct it.
     """
-    sess = store().get_session(session_id)
+    sess = store().get_session(spec_id)
     if task_type and task_type != sess["task_type"]:
         get_template(task_type)
-        store().update_session(session_id, task_type=task_type, rounds=0)
+        store().update_session(spec_id, task_type=task_type, rounds=0)
         sess["task_type"], sess["rounds"] = task_type, 0
 
     template = get_template(sess["task_type"])
@@ -171,7 +171,7 @@ def pb_clarify(
     clean, _ = normalize_slots(template, parsed)
     rounds = sess["rounds"] + (0 if result.ready else 1)
     store().update_session(
-        session_id, slots={k: v.model_dump() for k, v in clean.items()}, rounds=rounds
+        spec_id, slots={k: v.model_dump() for k, v in clean.items()}, rounds=rounds
     )
 
     out = {
@@ -193,13 +193,13 @@ def pb_clarify(
 
 
 @tool
-def pb_compile(session_id: str, slots: Optional[dict[str, SlotValue]] = None) -> dict:
+def pb_compile(spec_id: str, slots: Optional[dict[str, SlotValue]] = None) -> dict:
     """Render the English task spec from the slots (uses the last slots sent to pb_clarify if omitted).
 
     Anything not confirmed becomes a visible Assumption in the spec. Show the user a short summary in
     their language (see summary_instruction) and ask them to approve, edit, or cancel before acting.
     """
-    sess = store().get_session(session_id)
+    sess = store().get_session(spec_id)
     template = get_template(sess["task_type"])
     loc = load_locale(sess["locale"])
     parsed = _parse_slots(slots) if slots is not None else _parse_slots(sess["slots"])
@@ -208,7 +208,7 @@ def pb_compile(session_id: str, slots: Optional[dict[str, SlotValue]] = None) ->
     result = compile_spec(template, parsed, loc, ctx.get("repo"), ctx.get("glossary_hits"))
     clean, _ = normalize_slots(template, parsed)
     store().update_session(
-        session_id, slots={k: v.model_dump() for k, v in clean.items()}, spec=result.spec_markdown
+        spec_id, slots={k: v.model_dump() for k, v in clean.items()}, spec=result.spec_markdown
     )
     return {
         "spec_markdown": result.spec_markdown,
@@ -227,23 +227,23 @@ def pb_compile(session_id: str, slots: Optional[dict[str, SlotValue]] = None) ->
 
 
 @tool
-def pb_save(session_id: str, outcome: Outcome, final_spec: Optional[str] = None) -> dict:
+def pb_save(spec_id: str, outcome: Outcome, final_spec: Optional[str] = None) -> dict:
     """Record how the spec was received: accepted, edited (pass final_spec), or rejected.
 
     Accepted and edited specs go into the library. For edited specs, returns identifiers the user
     added — pair each with the word the user used in raw_text, confirm with the user, then add the
     pairs with pb_glossary.
     """
-    sess = store().get_session(session_id)
+    sess = store().get_session(spec_id)
     compiled = sess.get("spec") or ""
     if outcome == "edited" and not final_spec:
         raise ValueError("outcome 'edited' needs final_spec (the spec as the user changed it).")
 
-    store().update_session(session_id, outcome=outcome, final_spec=final_spec)
+    store().update_session(spec_id, outcome=outcome, final_spec=final_spec)
     lib_id = None
     if outcome != "rejected" and (final_spec or compiled):
         lib_id = store().library_add(
-            session_id, sess["task_type"], sess["locale"], sess["raw_text"], final_spec or compiled, outcome
+            spec_id, sess["task_type"], sess["locale"], sess["raw_text"], final_spec or compiled, outcome
         )
 
     candidates: list[str] = []

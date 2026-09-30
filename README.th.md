@@ -35,7 +35,7 @@ claude mcp add promptbridge -s user -- uvx promptbridge-mcp
 
 # 2) ติดตั้ง skill /spec
 mkdir -p ~/.claude/skills/spec
-curl -fsSL https://raw.githubusercontent.com/<your-github-username>/promptbridge/main/skills/spec/SKILL.md \
+curl -fsSL https://raw.githubusercontent.com/Endistic/promptbridge/main/skills/spec/SKILL.md \
   -o ~/.claude/skills/spec/SKILL.md
 
 # 3) เปิด Claude Code ในโปรเจกต์ไหนก็ได้ แล้วพิมพ์
@@ -67,7 +67,7 @@ Client ที่ไม่มี skill จะทำตามขั้นตอน
 ### ติดตั้งจาก source
 
 ```bash
-git clone https://github.com/<your-github-username>/promptbridge
+git clone https://github.com/Endistic/promptbridge
 claude mcp add promptbridge -s user -- uvx --from ./promptbridge promptbridge
 ```
 

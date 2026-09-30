@@ -38,7 +38,7 @@ claude mcp add promptbridge -s user -- uvx promptbridge-mcp
 
 # 2) Install the /spec skill
 mkdir -p ~/.claude/skills/spec
-curl -fsSL https://raw.githubusercontent.com/<your-github-username>/promptbridge/main/skills/spec/SKILL.md \
+curl -fsSL https://raw.githubusercontent.com/Endistic/promptbridge/main/skills/spec/SKILL.md \
   -o ~/.claude/skills/spec/SKILL.md
 
 # 3) In any project
@@ -70,7 +70,7 @@ Clients without the skill follow the workflow described in the tools themselves.
 ### From source
 
 ```bash
-git clone https://github.com/<your-github-username>/promptbridge
+git clone https://github.com/Endistic/promptbridge
 claude mcp add promptbridge -s user -- uvx --from ./promptbridge promptbridge
 ```
 

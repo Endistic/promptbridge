@@ -7,7 +7,7 @@ Thanks for helping. Issues and pull requests are welcome in English or Thai — 
 You need [uv](https://docs.astral.sh/uv/) and Python 3.10+.
 
 ```bash
-git clone https://github.com/<your-github-username>/promptbridge
+git clone https://github.com/Endistic/promptbridge
 cd promptbridge
 uv venv
 uv pip install -e ".[dev]"

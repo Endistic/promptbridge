@@ -29,9 +29,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/<your-github-username>/promptbridge"
-Issues = "https://github.com/<your-github-username>/promptbridge/issues"
-Changelog = "https://github.com/<your-github-username>/promptbridge/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/Endistic/promptbridge"
+Issues = "https://github.com/Endistic/promptbridge/issues"
+Changelog = "https://github.com/Endistic/promptbridge/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-asyncio>=0.23"]

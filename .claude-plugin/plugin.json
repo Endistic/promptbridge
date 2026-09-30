@@ -2,7 +2,25 @@
   "name": "promptbridge",
   "version": "0.2.0",
   "description": "Type coding requests in your own language. /spec asks only what matters and hands the agent a clear English task spec.",
-  "author": { "name": "Endy" },
+  "author": {
+    "name": "Endy"
+  },
   "license": "MIT",
-  "keywords": ["prompt", "spec", "thai", "localization", "mcp"]
+  "keywords": [
+    "prompt",
+    "spec",
+    "thai",
+    "localization",
+    "mcp"
+  ],
+  "mcpServers": {
+    "promptbridge": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "${CLAUDE_PLUGIN_ROOT}",
+        "promptbridge"
+      ]
+    }
+  }
 }

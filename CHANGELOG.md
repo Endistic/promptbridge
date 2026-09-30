@@ -14,6 +14,9 @@ All notable changes to this project are documented here. The format follows [Kee
 - CI on Python 3.10–3.13 (Linux, macOS) and tag-triggered PyPI release via trusted publishing.
 - CONTRIBUTING, Code of Conduct, Security policy, issue and pull request templates.
 
+### Fixed
+- Plugin server config moved from a root `.mcp.json` into `.claude-plugin/plugin.json`, so opening the repo in Claude Code no longer starts a broken project-level server.
+
 ## [0.1.1]
 
 ### Changed

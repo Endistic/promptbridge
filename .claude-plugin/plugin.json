@@ -1,6 +1,6 @@
 {
   "name": "promptbridge",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Type coding requests in your own language. /spec asks only what matters and hands the agent a clear English task spec.",
   "author": { "name": "Endy" },
   "license": "MIT",

@@ -1,0 +1,25 @@
+name: New language / เพิ่มภาษา
+description: Ask for, or offer to write, native question phrasing for a language.
+labels: [language]
+body:
+  - type: input
+    id: language
+    attributes:
+      label: Language and code
+      placeholder: Japanese (ja)
+    validations:
+      required: true
+  - type: dropdown
+    id: help
+    attributes:
+      label: Can you help translate?
+      options:
+        - Yes, I'll open a PR
+        - Yes, I can review someone else's translation
+        - No, just requesting
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything special about how developers in this language write requests?

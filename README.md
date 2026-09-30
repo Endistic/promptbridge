@@ -1,87 +1,127 @@
 # promptbridge
 
-พิมพ์สั่งงาน AI coding เป็นภาษาไทย (หรือภาษาแม่ของคุณ) แล้วได้ task spec ภาษาอังกฤษที่ชัดเจน —
-ถามกลับเฉพาะจุดที่กำกวม, ใช้ชื่อจริงใน codebase, และรายงานผลกลับเป็นภาษาไทย
+**Type coding requests in your own language. Get a clear English task spec your AI coding agent can execute without guessing.**
+
+[ภาษาไทย](README.th.md) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
+
+Many developers read English fine but don't *think* in it fast enough to write precise prompts. promptbridge sits between you and your coding agent (Claude Code, Claude Desktop, Cursor, any MCP client):
 
 ```
 /spec หน้า login อยากให้ถ้าใส่รหัสผิดหลายครั้งมันล็อคไว้ก่อน
+      (login page: lock it after too many wrong passwords)
 ```
 
-→ ถาม 1–3 ข้อแบบกดเลือก (ผิดกี่ครั้ง? ล็อคนานแค่ไหน? นับต่อ account หรือ IP?)
-→ สรุปไทย 2–3 บรรทัดให้ตรวจ + spec อังกฤษ (Goal / Context / Requirements / Constraints / Acceptance criteria / Assumptions)
-→ กด "ลงมือเลย" แล้ว agent ทำตาม spec และรายงานเป็นไทย
+1. It asks **only what is ambiguous** — at most 3 tap-to-answer questions, in your language: *how many attempts? lock for how long? per account or per IP?*
+2. It shows a **2–3 line summary in your language** plus the English spec: Goal · Context · Requirements · Constraints · Acceptance criteria · Assumptions.
+3. You approve, and the agent does the work — **reporting back in your language**, with code, paths and errors left untouched.
 
-## ทำงานอย่างไร
+It also learns your vocabulary: tell it once that «ตะกร้า» means `CartStore`, and every future spec uses the real name.
 
-| ส่วน | หน้าที่ |
+## How it works
+
+| Part | Does |
 | --- | --- |
-| **Host model** (Claude ใน Claude Code) | อ่านภาษาไทย, เติม slot เป็นอังกฤษ, ถามคำถามเป็นไทย, สรุปผลเป็นไทย |
-| **MCP server** (`promptbridge`, Python) | template ตาม task type, เลือกว่าจะถามอะไร, render spec แบบ deterministic, จำ glossary และ spec ที่เคยใช้ได้ผล |
+| **Host model** (the Claude/LLM you already use) | Reads your language, fills spec slots in English, asks the questions, summarizes results |
+| **promptbridge MCP server** (Python) | Task templates, decides which questions matter, renders the spec deterministically, remembers your glossary and specs that worked |
 
-Server ไม่เรียก LLM เอง จึงไม่มีค่า API เพิ่ม — ใช้ model ที่คุณใช้อยู่แล้ว
+The server never calls an LLM itself — no extra API cost, no data leaves your machine. Everything is stored locally in `~/.promptbridge/`.
 
-## ติดตั้ง (Claude Code)
+## Install
 
-ต้องมี [uv](https://docs.astral.sh/uv/) และ Claude Code
+You need [uv](https://docs.astral.sh/uv/).
+
+### Claude Code
 
 ```bash
-# 1) ลงทะเบียน MCP server (ครั้งเดียว ใช้ได้ทุกโปรเจกต์)
-claude mcp add promptbridge -s user -- uvx --from /path/to/promptbridge promptbridge
+# 1) Register the MCP server for all projects
+claude mcp add promptbridge -s user -- uvx promptbridge-mcp
 
-# 2) ติดตั้ง skill /spec
-mkdir -p ~/.claude/skills && cp -r /path/to/promptbridge/skills/spec ~/.claude/skills/
+# 2) Install the /spec skill
+mkdir -p ~/.claude/skills/spec
+curl -fsSL https://raw.githubusercontent.com/<your-github-username>/promptbridge/main/skills/spec/SKILL.md \
+  -o ~/.claude/skills/spec/SKILL.md
 
-# 3) เปิด Claude Code ในโปรเจกต์ไหนก็ได้ แล้วพิมพ์
+# 3) In any project
 /spec ปุ่มบันทึกในหน้าโปรไฟล์กดแล้วขึ้น error 500
 ```
 
-หรือโหลดเป็น plugin (รวม server + skill) ตอนทดสอบ: `claude --plugin-dir /path/to/promptbridge` แล้วใช้ `/promptbridge:spec`
+### Claude Desktop
 
-### Cursor / client อื่นที่รองรับ MCP
-
-เพิ่มใน `~/.cursor/mcp.json`:
+Claude menu (macOS menu bar) → **Settings… → Developer → Edit Config**, add the server, then quit (⌘Q) and reopen:
 
 ```json
-{ "mcpServers": { "promptbridge": { "command": "uvx", "args": ["--from", "/path/to/promptbridge", "promptbridge"] } } }
+{
+  "mcpServers": {
+    "promptbridge": { "command": "/opt/homebrew/bin/uvx", "args": ["promptbridge-mcp"] }
+  }
+}
 ```
 
-Client ที่ไม่มี skill จะได้ flow จากคำอธิบาย tool ของ server แทน (ใช้ได้ แต่ skill ใน Claude Code ให้ประสบการณ์ดีกว่า)
+Use the full path from `which uvx` — Claude Desktop does not see your shell's `PATH`. Then ask: *"Use promptbridge to make a spec for: …"*
 
-## คำสั่งที่ใช้บ่อย
+### Cursor and other MCP clients
 
-| พิมพ์ | ผล |
-| --- | --- |
-| `/spec <ข้อความ>` | flow เต็ม: ถาม → สรุป → ลงมือ |
-| `/spec --quick <ข้อความ>` | ข้ามคำถาม ช่องที่ไม่รู้จะถูกเขียนเป็น Assumptions ให้เห็น |
-| "จำคำนี้ไว้: ตะกร้า = CartStore" | เพิ่ม glossary |
-| "ดูคำที่จำไว้" | แสดง glossary ทั้งหมด |
-| "เคยสั่งงานคล้าย ๆ นี้ไหม" | ค้น spec เก่าที่เคยใช้ได้ผล |
+```json
+{ "mcpServers": { "promptbridge": { "command": "uvx", "args": ["promptbridge-mcp"] } } }
+```
 
-## Task types
+Clients without the skill follow the workflow described in the tools themselves.
 
-`bug_fix` · `feature` · `refactor` · `test` · `explain` — แต่ละแบบมี slot บังคับต่างกัน (ดู `src/promptbridge/templates/*.yaml`)
-เพิ่ม type ใหม่ได้โดยเพิ่มไฟล์ YAML หนึ่งไฟล์
-
-## Glossary
-
-- **personal** — เก็บใน `~/.promptbridge/pb.db` ตามคุณไปทุกโปรเจกต์
-- **repo** — เก็บใน `<repo>/.promptbridge/glossary.yaml` commit เข้า repo เพื่อให้ทั้งทีมใช้ศัพท์ชุดเดียวกัน
-
-เมื่อคุณแก้ spec แล้วใส่ชื่อจริง (เช่น `LoginAttemptService`) ระบบจะเสนอให้จำคู่คำนั้นไว้ใช้ครั้งหน้า
-
-## ภาษาอื่น
-
-ออกแบบเป็น `locale` ตั้งแต่ต้น — ตอนนี้มีคำถามภาษาไทยและอังกฤษสำเร็จรูป ภาษาอื่น (ja, vi, id, ko, …)
-ใช้ได้เลยโดย host model แปลคำถามให้ เพิ่มภาษาใหม่ได้ด้วยไฟล์ `src/promptbridge/locales/<code>.yaml` หนึ่งไฟล์
-
-## พัฒนาต่อ
+### From source
 
 ```bash
-uv venv && uv pip install -e ".[dev]"
-.venv/bin/pytest -q
+git clone https://github.com/<your-github-username>/promptbridge
+claude mcp add promptbridge -s user -- uvx --from ./promptbridge promptbridge
 ```
 
-ตั้ง `PROMPTBRIDGE_HOME` เพื่อย้ายที่เก็บฐานข้อมูล (ค่าเริ่มต้น `~/.promptbridge`)
-ดูสถิติ accepted / edited / rejected ได้จาก MCP resource `promptbridge://stats`
+Or load it as a Claude Code plugin (server + skill): `claude --plugin-dir ./promptbridge`, then `/promptbridge:spec`.
 
-รองรับ MCP Python SDK ทั้ง 1.x และ 2.x
+## Usage
+
+| Type | Result |
+| --- | --- |
+| `/spec <request>` | Full flow: ask → summarize → do |
+| `/spec --quick <request>` | Skip questions; unknowns become visible Assumptions in the spec |
+| "remember: ตะกร้า = CartStore" | Add a glossary term |
+| "show my glossary" | List glossary terms |
+| "have I asked for something like this before?" | Search specs that worked |
+
+### Task types
+
+`bug_fix` · `feature` · `refactor` · `test` · `explain` — each has its own required facts ([`src/promptbridge/templates/`](src/promptbridge/templates/)). Adding a type is one YAML file.
+
+### Glossary
+
+- **personal** — `~/.promptbridge/pb.db`, follows you across projects
+- **repo** — `<repo>/.promptbridge/glossary.yaml`, commit it so the whole team shares one vocabulary
+
+When you edit a spec and add a real name (e.g. `LoginAttemptService`), promptbridge offers to remember the pairing.
+
+## Languages
+
+Built around a `locale` from day one. Thai and English have hand-written question phrasing; any other language (Japanese, Vietnamese, Indonesian, Korean, Spanish, …) works today — the host model translates the questions. Adding native phrasing for a language is one file: [`src/promptbridge/locales/`](src/promptbridge/locales/). See [CONTRIBUTING.md](CONTRIBUTING.md#add-a-language).
+
+## MCP tools
+
+| Tool | Purpose |
+| --- | --- |
+| `pb_capture` | Start from the user's raw request: guess task type, match glossary, scan the repo |
+| `pb_clarify` | Decide which questions to ask (max 3 per round, max 2 rounds) |
+| `pb_compile` | Render the English spec; unconfirmed guesses become Assumptions |
+| `pb_save` | Record accepted / edited / rejected; suggest glossary terms from edits |
+| `pb_glossary` | List / add / remove terms (personal or repo scope) |
+| `pb_library` | Search specs that worked before |
+
+Resource `promptbridge://stats` reports accepted / edited / rejected counts.
+
+## Configuration
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `PROMPTBRIDGE_HOME` | `~/.promptbridge` | Where the local database lives |
+
+Works with MCP Python SDK 1.x and 2.x.
+
+## License
+
+[MIT](LICENSE)

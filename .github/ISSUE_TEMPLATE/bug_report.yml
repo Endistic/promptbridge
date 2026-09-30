@@ -1,0 +1,35 @@
+name: Bug report / แจ้งปัญหา
+description: Something doesn't work as expected. English or Thai is fine.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / เกิดอะไรขึ้น
+      description: Include the request you typed and what promptbridge did.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect? / ควรเป็นอย่างไร
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Client / ใช้กับอะไร
+      placeholder: Claude Code 2.x, Claude Desktop, Cursor, …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: promptbridge version
+      placeholder: "0.2.0"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output or logs
+      description: Claude Desktop logs are in ~/Library/Logs/Claude/mcp-server-promptbridge.log
+      render: text

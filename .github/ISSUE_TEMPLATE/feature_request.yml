@@ -1,0 +1,16 @@
+name: Feature request / ขอฟีเจอร์
+description: An idea to make promptbridge better. English or Thai is fine.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve? / แก้ปัญหาอะไร
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like? / อยากให้ทำอะไร
+    validations:
+      required: true

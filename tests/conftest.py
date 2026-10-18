@@ -5,6 +5,7 @@ import pytest
 def isolated_home(tmp_path, monkeypatch):
     """Every test gets its own database, and the server's cached store is reset."""
     monkeypatch.setenv("PROMPTBRIDGE_HOME", str(tmp_path / "home"))
+    monkeypatch.setenv("PROMPTBRIDGE_PONYTAIL_FLAG", str(tmp_path / "no-flag"))
     from promptbridge import server
 
     server._store = None

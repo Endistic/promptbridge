@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import os
 import re
 import unicodedata
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from jinja2 import Environment, StrictUndefined
 
@@ -46,9 +48,28 @@ Not confirmed by the user. If one turns out wrong, stop and ask.
 {% for a in assumptions %}- {{ a }}
 {% endfor %}
 {%- endif %}
+{%- if ponytail %}
+## Ponytail
+Ponytail mode is active. Take the laziest approach that works.
+{% for r in ponytail %}- {{ r }}
+{% endfor %}
+{%- endif %}
 ## How to work
 {% for i in instructions %}- {{ i }}
 {% endfor %}"""
+
+_PONYTAIL_RULES = [
+    "Skip anything not needed (YAGNI); prefer stdlib, native platform features, then already-installed dependencies.",
+    "Do not add dependencies or unrequested abstractions; make the smallest diff.",
+    "Leave one runnable check for non-trivial logic.",
+]
+
+
+def ponytail_active() -> bool:
+    """ponytail marks itself active with a flag file; PROMPTBRIDGE_PONYTAIL_FLAG overrides its path."""
+    flag = os.environ.get("PROMPTBRIDGE_PONYTAIL_FLAG") or Path.home() / ".claude" / ".ponytail-active"
+    return Path(flag).exists()
+
 
 _env = Environment(undefined=StrictUndefined, keep_trailing_newline=False, trim_blocks=False)
 _tmpl = _env.from_string(_BASE)
@@ -90,6 +111,7 @@ def compile_spec(
     locale: Locale,
     repo_context: dict | None = None,
     glossary_hits: list[dict] | None = None,
+    ponytail: bool | None = None,
 ) -> CompileResult:
     slots, warnings = normalize_slots(template, slots)
     missing_required: list[str] = []
@@ -151,6 +173,7 @@ def compile_spec(
         terminology=glossary_hits or [],
         assumptions=assumptions,
         instructions=instructions,
+        ponytail=_PONYTAIL_RULES if (ponytail_active() if ponytail is None else ponytail) else [],
     )
     md = re.sub(r"\n{3,}", "\n\n", md).strip() + "\n"
     return CompileResult(md, missing_required, assumptions, warnings)

@@ -159,3 +159,18 @@ def test_scan_monorepo(repo):
     assert {"Python", "FastAPI", "SQLAlchemy", "React", "TypeScript"} <= set(r["stack"])
     assert {"pytest", "Vitest"} <= set(r["test_frameworks"])
     assert "api/" in r["top_level"] and "web/" in r["top_level"]
+
+
+# ---- ponytail ------------------------------------------------------------------
+
+def test_ponytail_section_only_when_active(tmp_path, monkeypatch):
+    t = get_template("feature")
+    slots = {"goal": sv("Add X."), "behavior": sv(["Does X"]), "acceptance": sv(["X works"])}
+    off = compile_spec(t, slots, load_locale("en")).spec_markdown
+    assert "## Ponytail" not in off
+    flag = tmp_path / "flag"
+    flag.write_text("full")
+    monkeypatch.setenv("PROMPTBRIDGE_PONYTAIL_FLAG", str(flag))
+    on = compile_spec(t, slots, load_locale("en")).spec_markdown
+    assert "## Ponytail" in on and on.index("## Ponytail") < on.index("## How to work")
+    assert on.replace(on[on.index("## Ponytail"):on.index("## How to work")], "") == off

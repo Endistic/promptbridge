@@ -47,10 +47,15 @@ Restart Claude Code after each change so it starts the new server.
 
 ## Add a language
 
-1. Copy `src/promptbridge/locales/en.yaml` to `<code>.yaml` (ISO 639-1, e.g. `ja.yaml`).
-2. Translate `questions` and `confirm`. Keep `summary_instruction`, `reflect_instruction` and `communication_line` in English but replace `{language}` with the language name — they are instructions to the model.
-3. Add your language's words to `keywords` in each template so task types are guessed correctly.
-4. Run the tests. Open a PR — native speakers reviewing phrasing is the most valuable contribution this project can get.
+1. Copy `src/promptbridge/locales/ja.yaml` to `<code>.yaml` (ISO 639-1, lowercase, e.g. `de.yaml`).
+2. Translate every entry in `questions` and `confirm` (keep `{value}` in `confirm`). Set `name` (English name) and `native_name`.
+3. Write `style` in **English**: one or two sentences telling the model how to write in your language — register (formal/informal), script, punctuation. It is appended to the instructions the model receives.
+4. Add your language's words to `keywords` in each file in `templates/` so task types are guessed correctly. Matching is substring-based, so word stems work (`ошибк` matches `ошибка`, `ошибки`).
+5. Add the code to `SHIPPED` and a sentence or two to `test_guess_task_type_per_language` in `tests/test_locales.py`, then run the tests. They check that no question is missing or left in English.
+
+**A regional variant** (spelling, dates, vocabulary) is an overlay: `<base>-<region>.yaml` (e.g. `en-gb.yaml`, `pt-br.yaml`) containing only `name`, `style` and the questions that differ. Everything else is inherited from the base file. A variant in a different script (Traditional Chinese) belongs in `_SCRIPT_FALLBACK` in `catalog.py` until someone writes its full file.
+
+Native speakers reviewing existing phrasing is the most valuable contribution this project can get.
 
 ## Rules for changes
 

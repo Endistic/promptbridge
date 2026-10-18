@@ -119,7 +119,7 @@ def compile_spec(
                 )
         resolved[name] = [_clean(i) for i in items]
         for item in resolved[name]:
-            if locale.locale != "en" and _non_latin(item):
+            if locale.base != "en" and _non_latin(item):
                 warnings.append(f"Slot {name!r} still contains untranslated text: {item[:60]!r}")
 
     if inferred_titles:
@@ -142,7 +142,7 @@ def compile_spec(
 
     instructions = list(template.instructions)
     instructions.append("If anything in this spec is ambiguous or conflicts with the code, ask before guessing.")
-    if locale.locale != "en":
+    if locale.needs_communication_line:
         instructions.append(_clean(locale.communication_line))
 
     md = _tmpl.render(

@@ -1,0 +1,32 @@
+locale: es
+name: Spanish
+native_name: Español
+style: "Use neutral Spanish with informal «tú», understandable in Spain and Latin America."
+
+questions:
+  goal: En una frase, ¿qué resultado quieres conseguir?
+  constraints: ¿Hay algo que no se deba cambiar o alguna restricción que respetar?
+  files: ¿Sabes qué archivos o carpetas están involucrados?
+  observed: ¿Qué pasa ahora (el comportamiento incorrecto)?
+  expected: ¿Qué debería pasar en su lugar?
+  location: ¿Dónde ocurre? ¿En qué pantalla, endpoint o comando?
+  repro: ¿Cómo se reproduce? (pasos)
+  error_log: ¿Hay algún mensaje de error? Pégalo tal cual.
+  acceptance: ¿Cuándo se considera terminado? ¿Cómo lo comprobamos?
+  behavior: ¿Qué debe ver y obtener el usuario o quien hace la llamada?
+  edge_cases: ¿Qué debe pasar en casos inusuales (entrada vacía, fallo de la API, límites)?
+  surface: ¿Dónde va? ¿En qué pantalla, endpoint o tarea?
+  out_of_scope: ¿Hay algo que no forme parte de esta tarea?
+  target: ¿Qué parte del código hay que refactorizar?
+  desired_structure: ¿Cómo debería quedar la estructura después?
+  behavior_preserved: ¿El comportamiento actual debe quedar exactamente igual?
+  tests: ¿Qué tipo de pruebas necesitas?
+  code_under_test: ¿Qué código hay que probar?
+  cases: ¿Qué casos hay que cubrir?
+  framework: ¿Qué framework de pruebas se usa?
+  mocking: ¿Qué se debe simular (mock) y qué debe ser real?
+  scope: ¿Qué parte quieres que te explique?
+  focus: ¿Hay algo que quieras entender en especial?
+  depth: ¿Con cuánto detalle?
+
+confirm: "Entendí esto: {value}. ¿Es correcto?"

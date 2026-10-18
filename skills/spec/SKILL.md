@@ -12,7 +12,7 @@ You own the language work.
 
 ## Language rules (whole session)
 
-- Talk to the user in their language (the `locale`; default Thai). Short sentences, plain words.
+- Talk to the user in their language (the `locale`; default Thai). Short sentences, plain words. Follow the register and spelling the server's instructions name (e.g. です/ます, *vous*, British spelling).
 - Everything you send to the pb_* tools as `value_en` is **English**. Translate; never paste Thai into slots.
 - Keep code, file paths, identifiers, commands, error messages and numbers exactly as they are.
 - Technical terms with no common Thai word (API, endpoint, cache, deploy) stay in English inside Thai sentences.
@@ -22,7 +22,7 @@ You own the language work.
 ### 1. Capture
 Call `pb_capture` with:
 - `raw_text`: the user's request exactly as typed (everything after `/spec`)
-- `locale`: `th` unless the user writes in another language (`ja`, `vi`, `id`, …)
+- `locale`: the language the user writes in — `th`, `en`, `en-GB`, `en-AU`, `ja`, `zh`, `es`, `ru`, `ar`, `fr`, `ko` have native phrasing; any other code (`vi`, `de`, `zh-TW`, …) also works. Use a regional code when the user's spelling shows it (colour → `en-GB` or `en-AU`).
 - `cwd`: the current working directory
 
 If the user wrote `/spec --quick …`, remember `quick=true` for step 3 and strip the flag from `raw_text`.

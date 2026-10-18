@@ -128,8 +128,8 @@ def test_english_locale_has_no_communication_line():
 
 
 def test_fallback_locale_names_language():
-    ja = load_locale("ja")
-    assert ja.is_fallback and "Japanese" in ja.communication_line
+    vi = load_locale("vi")
+    assert vi.is_fallback and "Vietnamese" in vi.communication_line
 
 
 # ---- glossary --------------------------------------------------------------------

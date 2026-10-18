@@ -99,7 +99,23 @@ When you edit a spec and add a real name (e.g. `LoginAttemptService`), promptbri
 
 ## Languages
 
-Built around a `locale` from day one. Thai and English have hand-written question phrasing; any other language (Japanese, Vietnamese, Indonesian, Korean, Spanish, …) works today — the host model translates the questions. Adding native phrasing for a language is one file: [`src/promptbridge/locales/`](src/promptbridge/locales/). See [CONTRIBUTING.md](CONTRIBUTING.md#add-a-language).
+Hand-written question phrasing ships for 11 locales. Pass the code as `locale` (case and `_`/`-` don't matter; `en-UK`, `jp`, `kr`, `zh-Hans` are understood).
+
+| Language | `locale` | Notes |
+| --- | --- | --- |
+| Thai | `th` | |
+| English | `en`, `en-US` | |
+| English (UK) | `en-GB` | British spelling, day-month-year dates |
+| English (Australia) | `en-AU` | Australian spelling, day-month-year dates |
+| Japanese | `ja` | polite です/ます |
+| Mandarin Chinese (Simplified) | `zh`, `zh-CN` | |
+| Spanish | `es` (`es-MX`, `es-ES`, …) | neutral, informal *tú* |
+| Russian | `ru` | polite *вы* |
+| Arabic | `ar` | Modern Standard Arabic |
+| French | `fr` (`fr-CA`, …) | *vous*, French punctuation spacing |
+| Korean | `ko` | polite 해요체 |
+
+Any other language (Vietnamese, Indonesian, German, Traditional Chinese `zh-TW`, …) still works: promptbridge uses English phrasing and tells the host model to ask and reply in that language. Task types are guessed from keywords in all 11 languages. Adding a language is one YAML file — see [CONTRIBUTING.md](CONTRIBUTING.md#add-a-language).
 
 ## MCP tools
 

@@ -1,0 +1,32 @@
+locale: fr
+name: French
+native_name: Français
+style: "Use «vous» and French typography (a space before ? ! : ;)."
+
+questions:
+  goal: En une phrase, quel résultat voulez-vous obtenir ?
+  constraints: Y a-t-il quelque chose à ne pas modifier, ou des contraintes à respecter ?
+  files: Savez-vous quels fichiers ou dossiers sont concernés ?
+  observed: Que se passe-t-il actuellement (le comportement incorrect) ?
+  expected: Que devrait-il se passer à la place ?
+  location: Où cela se produit-il ? Sur quelle page, quel endpoint ou quelle commande ?
+  repro: Comment reproduire le problème ? (étapes)
+  error_log: Y a-t-il un message d'erreur ? Collez-le tel quel.
+  acceptance: Quand la tâche est-elle terminée ? Comment le vérifier ?
+  behavior: Que doit voir et obtenir l'utilisateur ou l'appelant ?
+  edge_cases: Que faire dans les cas inhabituels (entrée vide, panne d'API, limites dépassées) ?
+  surface: Où cela se trouve-t-il ? Sur quel écran, quel endpoint ou quelle tâche ?
+  out_of_scope: Y a-t-il des choses qui ne font pas partie de cette tâche ?
+  target: Quelle partie du code faut-il refactoriser ?
+  desired_structure: À quoi doit ressembler la structure ensuite ?
+  behavior_preserved: Le comportement actuel doit-il rester strictement identique ?
+  tests: De quels tests avez-vous besoin ?
+  code_under_test: Quel code faut-il tester ?
+  cases: Quels cas faut-il couvrir ?
+  framework: Quel framework de test est utilisé ?
+  mocking: Que faut-il simuler (mock), et que faut-il garder réel ?
+  scope: Quelle partie voulez-vous que j'explique ?
+  focus: Y a-t-il un point que vous voulez particulièrement comprendre ?
+  depth: Avec quel niveau de détail ?
+
+confirm: "J'ai compris : {value}. Est-ce bien cela ?"

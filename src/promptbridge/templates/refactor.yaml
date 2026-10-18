@@ -3,6 +3,13 @@ title: Refactor
 keywords:
   th: [รีแฟคเตอร์, refactor, ปรับโครง, จัดโครงสร้าง, แยกไฟล์, แยกฟังก์ชัน, ทำให้อ่านง่าย, ลดโค้ดซ้ำ, ย้าย]
   en: [refactor, restructure, clean up, extract, split, rename, simplify, deduplicate]
+  ja: ["リファクタ", "整理", "分割", "共通化", "構成を見直"]
+  zh: ["重构", "整理", "拆分", "优化结构", "去重"]
+  es: ["refactorizar", "reestructurar", "separar", "limpiar código", "duplicado"]
+  ru: ["рефактор", "разделить", "переписать структур", "дублирован"]
+  ar: ["إعادة هيكلة", "إعادة تنظيم", "تقسيم", "تكرار الكود"]
+  fr: ["refactor", "restructurer", "découper", "nettoyer le code", "dupliqué"]
+  ko: ["리팩터", "리팩토링", "정리", "분리", "중복"]
 slots:
   target:
     description: The code area to refactor — files, module, class, or function.

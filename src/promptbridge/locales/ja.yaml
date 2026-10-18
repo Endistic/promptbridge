@@ -1,0 +1,32 @@
+locale: ja
+name: Japanese
+native_name: 日本語
+style: "Use polite です/ます form. Keep technical terms in katakana or English the way Japanese developers usually write them."
+
+questions:
+  goal: 一言でいうと、最終的にどうなってほしいですか？
+  constraints: 変えてはいけない部分や、守るべき制約はありますか？
+  files: 関係するファイルやフォルダは分かりますか？
+  observed: 今どうなっていますか？（おかしい動き）
+  expected: 本来はどうなるべきですか？
+  location: どこで起きますか？（画面・API・コマンドなど）
+  repro: どうすると再現しますか？（手順）
+  error_log: エラーメッセージはありますか？そのまま貼り付けてください。
+  acceptance: 何ができたら完了ですか？どう確認しますか？
+  behavior: ユーザーや呼び出し側は何を見て、何を受け取るべきですか？
+  edge_cases: 想定外のケース（空の入力、API の障害、上限超え）ではどうしますか？
+  surface: どこに置きますか？（画面・エンドポイント・ジョブなど）
+  out_of_scope: 今回はやらないことはありますか？
+  target: どのコードをリファクタリングしますか？
+  desired_structure: リファクタリング後はどんな構成にしたいですか？
+  behavior_preserved: 既存の動作は完全に同じである必要がありますか？
+  tests: どんなテストが必要ですか？
+  code_under_test: どのコードをテストしますか？
+  cases: どのケースをカバーする必要がありますか？
+  framework: どのテストフレームワークを使いますか？
+  mocking: 何をモックにして、何を本物で動かしますか？
+  scope: どの部分を説明しましょうか？
+  focus: 特に知りたい点はありますか？
+  depth: どのくらい詳しく説明しましょうか？
+
+confirm: "「{value}」という理解で合っていますか？"

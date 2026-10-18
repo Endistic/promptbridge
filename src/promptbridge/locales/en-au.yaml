@@ -1,0 +1,10 @@
+# Overlay on en.yaml: only what differs for Australian English.
+locale: en-AU
+name: English (Australia)
+native_name: English (Australia)
+style: "Use Australian English spelling (colour, behaviour, organise, licence) and day-month-year dates."
+
+questions:
+  observed: What happens now (the wrong behaviour)?
+  behavior: What should the user or caller see and get?
+  behavior_preserved: Must existing behaviour stay exactly the same?

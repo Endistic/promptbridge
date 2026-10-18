@@ -134,10 +134,22 @@ async def test_personal_glossary_and_errors():
 
 async def test_unsupported_locale_falls_back():
     async with connect(mcp) as c:
-        cap = await call(c, "pb_capture", raw_text="ログイン画面にロック機能を追加したい", locale="ja")
-        assert cap["locale"] == {"code": "ja", "language": "Japanese", "phrasing_available": False}
+        cap = await call(c, "pb_capture", raw_text="Thêm chức năng khóa tài khoản", locale="vi")
+        assert cap["locale"] == {"code": "vi", "language": "Vietnamese", "phrasing_available": False}
         r = await call(c, "pb_clarify", spec_id=cap["spec_id"], slots={})
-        assert r["translate_questions_to"] == "Japanese"
+        assert r["translate_questions_to"] == "Vietnamese"
+
+
+async def test_japanese_end_to_end():
+    async with connect(mcp) as c:
+        cap = await call(c, "pb_capture", raw_text="ログイン画面にロック機能を追加したい", locale="ja-JP")
+        assert cap["task_type"] == "feature"
+        assert cap["locale"] == {"code": "ja-JP", "language": "Japanese", "phrasing_available": True}
+        r = await call(c, "pb_clarify", spec_id=cap["spec_id"], slots={})
+        assert r["questions"][0]["prompt"].startswith("一言でいうと")
+        assert "translate_questions_to" not in r
+        comp = await call(c, "pb_compile", spec_id=cap["spec_id"])
+        assert "Japanese" in comp["summary_instruction"] and "です/ます" in comp["summary_instruction"]
 
 
 async def test_no_tool_argument_named_session_id():

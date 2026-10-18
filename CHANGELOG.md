@@ -4,6 +4,19 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.3.0]
+
+### Added
+- Native question phrasing for **Japanese, Mandarin Chinese (Simplified), Spanish, Russian, Arabic, French and Korean**, plus **English (UK)** and **English (Australia)** variants — 11 locales in total with Thai and English.
+- Regional locale codes: `en-GB`, `en-AU`, `es-MX`, `zh-CN`, … are normalized (`en_gb`, `en-UK`, `jp`, `kr`, `zh-Hans` also work). A region without its own file inherits its base language; a region file only overrides what differs.
+- A per-locale writing `style` (register, script, spelling) appended to the instructions the host model receives.
+- Task-type keywords in all 11 languages.
+- Traditional Chinese (`zh-TW`, `zh-HK`) falls back to English phrasing with an explicit Traditional-characters instruction instead of serving Simplified questions.
+- `tests/test_locales.py`: every locale has every question, none left in English, task-type guessing per language.
+
+### Changed
+- `pb_capture` reports the normalized code (`ja-JP`, `en-GB`) and the language's English name.
+
 ## [0.2.0] — first public release
 
 ### Changed

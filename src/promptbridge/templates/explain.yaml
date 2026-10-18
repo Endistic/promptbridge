@@ -4,6 +4,13 @@ ask: false
 keywords:
   th: [อธิบาย, ทำงานยังไง, ทำงานอย่างไร, คืออะไร, หมายความว่า, ทำไม, ไหลยังไง, flow]
   en: [explain, how does, what is, why does, walk me through]
+  ja: ["説明", "教えて", "仕組み", "どうなって", "とは"]
+  zh: ["解释", "说明", "怎么工作", "是什么", "为什么"]
+  es: ["explica", "cómo funciona", "qué es", "por qué"]
+  ru: ["объясни", "как работает", "что такое", "почему"]
+  ar: ["اشرح", "كيف يعمل", "ما هو", "لماذا"]
+  fr: ["explique", "comment fonctionne", "qu'est-ce que", "pourquoi"]
+  ko: ["설명", "어떻게 동작", "무엇인가", "왜"]
 slots:
   scope:
     description: What to explain — file, function, flow, or concept.

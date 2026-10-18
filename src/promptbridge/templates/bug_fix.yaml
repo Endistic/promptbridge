@@ -3,6 +3,13 @@ title: Bug fix
 keywords:
   th: [บัค, บั๊ก, พัง, ไม่ทำงาน, ผิดพลาด, error, เออเร่อ, แครช, ค้าง, ไม่ขึ้น, หาย, แสดงผิด]
   en: [bug, error, crash, broken, fails, exception, not working, wrong]
+  ja: ["バグ", "エラー", "動かない", "落ちる", "クラッシュ", "不具合", "表示されない"]
+  zh: ["bug", "报错", "错误", "崩溃", "不工作", "无法", "异常", "闪退"]
+  es: ["error", "falla", "no funciona", "se cae", "bug", "excepción"]
+  ru: ["ошибк", "баг", "падает", "не работает", "сломал", "исключени"]
+  ar: ["خطأ", "مشكلة", "لا يعمل", "عطل", "يتعطل", "تعطل"]
+  fr: ["bug", "erreur", "plante", "ne marche pas", "ne fonctionne pas", "exception"]
+  ko: ["버그", "오류", "에러", "안 돼", "안돼", "작동하지", "크래시"]
 slots:
   observed:
     description: What actually happens now (the wrong behavior).

@@ -1,0 +1,32 @@
+locale: zh
+name: Mandarin Chinese
+native_name: 简体中文
+style: "Use Simplified Chinese characters (Mainland usage)."
+
+questions:
+  goal: 用一句话说，你希望最终结果是什么？
+  constraints: 有没有不能改动的部分，或必须遵守的限制？
+  files: 知道涉及哪些文件或目录吗？
+  observed: 现在出现了什么情况（错误的表现）？
+  expected: 正确的表现应该是什么？
+  location: 问题出现在哪里——哪个页面、哪个 API 或哪个命令？
+  repro: 怎样操作才能复现这个问题？（步骤）
+  error_log: 有报错信息吗？请直接粘贴原文。
+  acceptance: 怎样才算完成？如何验证？
+  behavior: 用户或调用方应该看到什么、得到什么？
+  edge_cases: 遇到异常情况（输入为空、API 故障、超出限制）时应该怎么处理？
+  surface: 放在哪里——哪个页面、接口还是任务？
+  out_of_scope: 这次有哪些内容不需要做？
+  target: 要重构哪部分代码？
+  desired_structure: 重构后希望是什么结构？
+  behavior_preserved: 现有行为必须完全保持不变吗？
+  tests: 需要什么样的测试？
+  code_under_test: 要测试哪部分代码？
+  cases: 需要覆盖哪些情况？
+  framework: 使用哪个测试框架？
+  mocking: 哪些需要 mock，哪些必须用真实的？
+  scope: 想让我解释哪一部分？
+  focus: 有特别想了解的地方吗？
+  depth: 需要讲得多详细？
+
+confirm: "我的理解是：{value}。对吗？"

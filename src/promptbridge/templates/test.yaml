@@ -3,6 +3,13 @@ title: Tests
 keywords:
   th: [เทส, เขียนเทส, ทดสอบ, unit test, test case, coverage]
   en: [test, tests, unit test, coverage, spec, e2e]
+  ja: ["テスト", "カバレッジ"]
+  zh: ["测试", "单元测试", "覆盖率"]
+  es: ["prueba", "pruebas", "test", "cobertura"]
+  ru: ["тест", "покрыти"]
+  ar: ["اختبار", "اختبارات", "تغطية"]
+  fr: ["test", "tests unitaires", "couverture"]
+  ko: ["테스트", "커버리지"]
 slots:
   code_under_test:
     description: The code to test — file, function, endpoint, or component.

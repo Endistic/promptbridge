@@ -1,0 +1,10 @@
+# Overlay on en.yaml: only what differs for UK English.
+locale: en-GB
+name: English (UK)
+native_name: English (UK)
+style: "Use British English spelling (colour, behaviour, organise, licence) and day-month-year dates."
+
+questions:
+  observed: What happens now (the wrong behaviour)?
+  behavior: What should the user or caller see and get?
+  behavior_preserved: Must existing behaviour stay exactly the same?

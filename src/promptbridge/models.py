@@ -62,15 +62,22 @@ class TaskTemplate(BaseModel):
 
 
 class Locale(BaseModel):
-    locale: str
-    name: str
+    locale: str  # normalized code: "th", "en-GB", "zh-CN"
+    base: str  # language part: "th", "en", "zh"
+    name: str  # English name used in instructions: "English (UK)"
     native_name: str
     questions: dict[str, str]
     confirm: str
     summary_instruction: str
     reflect_instruction: str
     communication_line: str
+    style: str = ""  # writing-style hint for the host model (register, spelling, script)
     is_fallback: bool = False  # True when we used English phrasing for an unsupported locale
+
+    @property
+    def needs_communication_line(self) -> bool:
+        """Plain or US English needs no "reply in X" line; every other locale does."""
+        return self.locale not in ("en", "en-US")
 
 
 class Question(BaseModel):

@@ -1,6 +1,6 @@
 [project]
 name = "promptbridge-mcp"
-version = "0.2.0"
+version = "0.3.0"
 description = "Type coding requests in your own language; get a clear English task spec for AI coding agents (MCP server)."
 readme = "README.md"
 requires-python = ">=3.10"

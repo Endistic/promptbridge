@@ -1,0 +1,32 @@
+locale: ko
+name: Korean
+native_name: 한국어
+style: "Use polite 해요체."
+
+questions:
+  goal: 한 문장으로, 최종적으로 어떤 결과를 원하세요?
+  constraints: 바꾸면 안 되는 부분이나 지켜야 할 제약이 있나요?
+  files: 관련된 파일이나 폴더를 알고 계신가요?
+  observed: 지금 어떤 문제가 생기나요? (잘못된 동작)
+  expected: 원래는 어떻게 동작해야 하나요?
+  location: 어디에서 발생하나요? (화면, API, 명령어 등)
+  repro: 어떻게 하면 재현되나요? (단계)
+  error_log: 에러 메시지가 있나요? 그대로 붙여 넣어 주세요.
+  acceptance: 무엇이 되면 완료인가요? 어떻게 확인하나요?
+  behavior: 사용자나 호출하는 쪽은 무엇을 보고, 무엇을 받아야 하나요?
+  edge_cases: 예외 상황(빈 입력, API 장애, 한도 초과)에서는 어떻게 해야 하나요?
+  surface: 어디에 들어가나요? (화면, 엔드포인트, 작업 등)
+  out_of_scope: 이번에 하지 않아도 되는 것이 있나요?
+  target: 어느 코드를 리팩터링할까요?
+  desired_structure: 리팩터링 후 구조는 어떻게 되면 좋을까요?
+  behavior_preserved: 기존 동작이 완전히 그대로 유지되어야 하나요?
+  tests: 어떤 테스트가 필요하세요?
+  code_under_test: 어느 코드를 테스트할까요?
+  cases: 어떤 경우를 다뤄야 하나요?
+  framework: 어떤 테스트 프레임워크를 쓰나요?
+  mocking: 무엇을 mock 처리하고, 무엇을 실제로 써야 하나요?
+  scope: 어느 부분을 설명해 드릴까요?
+  focus: 특히 알고 싶은 부분이 있나요?
+  depth: 얼마나 자세히 설명할까요?
+
+confirm: "제가 이해한 내용은 '{value}'인데, 맞나요?"

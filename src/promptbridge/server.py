@@ -100,6 +100,10 @@ def pb_capture(
 ) -> dict:
     """Start a session from the user's request, written in their own language.
 
+    `locale` is the language the user writes in: th, en, en-GB, en-AU, ja, zh, es, ru, ar, fr, ko have
+    native question phrasing; any other code (vi, de, zh-TW, ...) works with English phrasing that you
+    translate.
+
     Returns a spec_id, a guessed task_type (override it if wrong), glossary terms found in the
     text, a light scan of the repo at `cwd`, and the slot schema to fill.
 

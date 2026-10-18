@@ -3,6 +3,13 @@ title: Feature
 keywords:
   th: [เพิ่ม, อยากให้, ทำให้, สร้าง, ฟีเจอร์, ใหม่, รองรับ]
   en: [add, feature, implement, support, create, new]
+  ja: ["追加", "実装", "機能", "したい", "対応"]
+  zh: ["添加", "新增", "实现", "功能", "支持", "希望"]
+  es: ["añadir", "agregar", "implementar", "nueva función", "quiero que", "soportar"]
+  ru: ["добав", "реализ", "функци", "хочу", "поддерж"]
+  ar: ["أضف", "إضافة", "ميزة", "تنفيذ", "أريد", "دعم"]
+  fr: ["ajouter", "implémenter", "fonctionnalité", "je veux", "prendre en charge"]
+  ko: ["추가", "구현", "기능", "하고 싶", "지원"]
 slots:
   behavior:
     description: Concrete behavior requirements, one per item (what the user or caller sees and gets).

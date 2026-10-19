@@ -174,3 +174,32 @@ def test_ponytail_section_only_when_active(tmp_path, monkeypatch):
     on = compile_spec(t, slots, load_locale("en")).spec_markdown
     assert "## Ponytail" in on and on.index("## Ponytail") < on.index("## How to work")
     assert on.replace(on[on.index("## Ponytail"):on.index("## How to work")], "") == off
+
+
+def test_ponytail_explicit_override(tmp_path, monkeypatch):
+    t = get_template("feature")
+    slots = {"goal": sv("Add X."), "behavior": sv(["Does X"]), "acceptance": sv(["X works"])}
+    # When active via flag, explicit ponytail=False disables it
+    flag = tmp_path / "flag"
+    flag.write_text("full")
+    monkeypatch.setenv("PROMPTBRIDGE_PONYTAIL_FLAG", str(flag))
+    off = compile_spec(t, slots, load_locale("en"), ponytail=False).spec_markdown
+    assert "## Ponytail" not in off
+
+    # When inactive, explicit ponytail=True enables it
+    monkeypatch.setenv("PROMPTBRIDGE_PONYTAIL_FLAG", str(tmp_path / "no-flag"))
+    on = compile_spec(t, slots, load_locale("en"), ponytail=True).spec_markdown
+    assert "## Ponytail" in on
+
+
+def test_ponytail_detected_via_agents_md(tmp_path, monkeypatch):
+    monkeypatch.delenv("PROMPTBRIDGE_PONYTAIL_FLAG", raising=False)
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / ".git").mkdir()
+    (repo / "AGENTS.md").write_text("# Ponytail, lazy senior dev mode\nTake the laziest approach.")
+    t = get_template("feature")
+    slots = {"goal": sv("Add X."), "behavior": sv(["Does X"]), "acceptance": sv(["X works"])}
+    on = compile_spec(t, slots, load_locale("en"), cwd=repo).spec_markdown
+    assert "## Ponytail" in on
+

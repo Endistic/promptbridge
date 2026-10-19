@@ -90,6 +90,9 @@ async def test_login_lockout_flow(repo):
         assert "Thai" in comp["summary_instruction"]
         assert comp["validation"]["missing_required"] == []
 
+        comp_pony = await call(c, "pb_compile", spec_id=sid, ponytail=True)
+        assert "## Ponytail" in comp_pony["spec_markdown"]
+
         # User edits the spec, naming a real service → glossary candidate.
         final = md.replace("Lock a user account", "Use `LoginAttemptService` to lock a user account")
         saved = await call(c, "pb_save", spec_id=sid, outcome="edited", final_spec=final)

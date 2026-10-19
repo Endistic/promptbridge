@@ -65,10 +65,50 @@ _PONYTAIL_RULES = [
 ]
 
 
-def ponytail_active() -> bool:
-    """ponytail marks itself active with a flag file; PROMPTBRIDGE_PONYTAIL_FLAG overrides its path."""
-    flag = os.environ.get("PROMPTBRIDGE_PONYTAIL_FLAG") or Path.home() / ".claude" / ".ponytail-active"
-    return Path(flag).exists()
+def ponytail_active(cwd: Path | str | None = None) -> bool:
+    """ponytail marks itself active with a flag file or AGENTS.md; PROMPTBRIDGE_PONYTAIL_FLAG overrides."""
+    flag = os.environ.get("PROMPTBRIDGE_PONYTAIL_FLAG")
+    if flag is not None:
+        p = Path(flag)
+        return p.exists() and p.read_text(encoding="utf-8", errors="ignore").strip().lower() != "off"
+
+    candidate_flags = [
+        Path.home() / ".claude" / ".ponytail-active",
+        Path.home() / ".cursor" / ".ponytail-active",
+        Path.home() / ".qoder" / ".ponytail-active",
+        Path.home() / ".codebuddy" / ".ponytail-active",
+        Path.home() / ".config" / "opencode" / ".ponytail-active",
+    ]
+    for candidate in candidate_flags:
+        if candidate.exists():
+            try:
+                mode = candidate.read_text(encoding="utf-8", errors="ignore").strip().lower()
+                if mode and mode != "off":
+                    return True
+            except OSError:
+                pass
+
+    dirs_to_check = []
+    if cwd:
+        dirs_to_check.append(Path(cwd).expanduser().resolve())
+    dirs_to_check.append(Path.cwd().resolve())
+
+    for d in dirs_to_check:
+        curr: Path | None = d
+        while curr:
+            agents = curr / "AGENTS.md"
+            if agents.exists():
+                try:
+                    txt = agents.read_text(encoding="utf-8", errors="ignore").lower()
+                    if "ponytail" in txt or "lazy senior dev" in txt:
+                        return True
+                except OSError:
+                    pass
+            if (curr / ".git").exists() or curr.parent == curr:
+                break
+            curr = curr.parent
+
+    return False
 
 
 _env = Environment(undefined=StrictUndefined, keep_trailing_newline=False, trim_blocks=False)
@@ -112,6 +152,7 @@ def compile_spec(
     repo_context: dict | None = None,
     glossary_hits: list[dict] | None = None,
     ponytail: bool | None = None,
+    cwd: Path | str | None = None,
 ) -> CompileResult:
     slots, warnings = normalize_slots(template, slots)
     missing_required: list[str] = []
@@ -173,7 +214,7 @@ def compile_spec(
         terminology=glossary_hits or [],
         assumptions=assumptions,
         instructions=instructions,
-        ponytail=_PONYTAIL_RULES if (ponytail_active() if ponytail is None else ponytail) else [],
+        ponytail=_PONYTAIL_RULES if (ponytail_active(cwd) if ponytail is None else ponytail) else [],
     )
     md = re.sub(r"\n{3,}", "\n\n", md).strip() + "\n"
     return CompileResult(md, missing_required, assumptions, warnings)

@@ -197,11 +197,16 @@ def pb_clarify(
 
 
 @tool
-def pb_compile(spec_id: str, slots: Optional[dict[str, SlotValue]] = None) -> dict:
+def pb_compile(
+    spec_id: str,
+    slots: Optional[dict[str, SlotValue]] = None,
+    ponytail: Optional[bool] = None,
+) -> dict:
     """Render the English task spec from the slots (uses the last slots sent to pb_clarify if omitted).
 
     Anything not confirmed becomes a visible Assumption in the spec. Show the user a short summary in
     their language (see summary_instruction) and ask them to approve, edit, or cancel before acting.
+    Set ponytail=true/false to explicitly include/exclude the Ponytail section (auto-detected if omitted).
     """
     sess = store().get_session(spec_id)
     template = get_template(sess["task_type"])
@@ -209,7 +214,15 @@ def pb_compile(spec_id: str, slots: Optional[dict[str, SlotValue]] = None) -> di
     parsed = _parse_slots(slots) if slots is not None else _parse_slots(sess["slots"])
     ctx = sess["context"]
 
-    result = compile_spec(template, parsed, loc, ctx.get("repo"), ctx.get("glossary_hits"))
+    result = compile_spec(
+        template,
+        parsed,
+        loc,
+        ctx.get("repo"),
+        ctx.get("glossary_hits"),
+        ponytail=ponytail,
+        cwd=sess.get("cwd"),
+    )
     clean, _ = normalize_slots(template, parsed)
     store().update_session(
         spec_id, slots={k: v.model_dump() for k, v in clean.items()}, spec=result.spec_markdown
